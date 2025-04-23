@@ -6,19 +6,19 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Box} from "@mui/material";
 import {getData} from "../../api/apiSpringBoot";
-import {data} from "react-router-dom"; // Assurez-vous d'importer getData
+import {data} from "react-router-dom";
 
 export default function ControlledAccordions() {
     const [expanded, setExpanded] = React.useState<string | false>(false);
     const [invoices, setInvoices] = React.useState<any[]>([]);
-    const [ordersDetails, setOrdersDetails] = React.useState<Record<number, any[]>>({}); // Modifié pour un objet
+    const [ordersDetails, setOrdersDetails] = React.useState<Record<number, any[]>>({});
     const handleChange = (panel: string) => async (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
         if (isExpanded) {
             const invoiceId = parseInt(panel.replace("panel", ""));
             await fetchOrdersDetails(invoiceId);
         } else {
-            // On ne supprime pas les commandes, juste on vide les détails de la commande pour le panel fermé
+
             setOrdersDetails(prevState => {
                 const updatedState = {...prevState};
                 delete updatedState[parseInt(panel.replace("panel", ""))];
@@ -36,17 +36,12 @@ export default function ControlledAccordions() {
     };
     const fetchOrdersDetails = async (id_invoice: number) => {
         if (ordersDetails[id_invoice]) {
-            // Si les détails sont déjà récupérés, on ne refait pas la requête
+
             return;
         }
-        console.log("🔍 Réponse API orders:", data);
         try {
-            console.log(`Chargement des commandes pour la facture ID: ${id_invoice}`);
             const data = await getData(`/orders/by-invoice/${id_invoice}`);
-            console.log("Détails des commandes:", data);
-            // Vérification si 'data' est un tableau ou un objet
-            const normalizedData = Array.isArray(data) ? data : [data]; // Si ce n'est pas un tableau, on le transforme en tableau
-            // Mettre à jour l'état avec les détails des commandes sous forme de tableau
+            const normalizedData = Array.isArray(data) ? data : [data];
             setOrdersDetails(prevState => ({
                 ...prevState,
                 [id_invoice]: normalizedData

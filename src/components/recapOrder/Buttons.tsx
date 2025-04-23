@@ -17,18 +17,18 @@ const Buttons: FC<{ totalPrice: number; produits: any[] }> = ({totalPrice: props
     const [emailError, setEmailError] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    // Récupération de l'email de l'utilisateur
+
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setEmail(value);
         const isValidEmail = value && /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+/.test(value);
         setEmailError(!isValidEmail);
     };
-    // Fonction pour retourner au dashboard
+
     const handleContinueShopping = () => {
         navigate("/dashboard");
     };
-    // Fonction pour le bouton payer
+
     const handlePay = async () => {
         setLoading(true);
         setErrorMessage("");

@@ -20,7 +20,7 @@ const SearchBar: FC<SearchBarProps> = ({searchTerm, setSearchTerm, onSearch}) =>
         </Box>
     );
 };
-//Style de la recherche
+
 const StyledInput = styled.input`
     width: 300px;
     padding: 10px;

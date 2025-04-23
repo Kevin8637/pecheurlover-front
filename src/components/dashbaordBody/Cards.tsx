@@ -19,7 +19,6 @@ const Cards = ({products}: CardsProps) => {
     const viewDetailsProduct = (id: number) => {
         navigate(`/product/${id}`);
     };
-    //Met la première lettre en majuscule
     const capitalizeFirstLetter = (str: string) => {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     };
@@ -52,7 +51,7 @@ const Cards = ({products}: CardsProps) => {
     return (
         <Box mt={2}>
             <Grid container spacing={3} sx={{display: "flex", justifyContent: "space-around", width: "100%"}}>
-                {products.length > 0 ? ( // ✅ Utiliser `products` au lieu de `allProducts`
+                {products.length > 0 ? (
                     products.map((product) => (
                         <Grid item key={product.id_product} sx={{textAlign: "center", margin: "30px", height: "100%"}}>
                             <StyledCard>
@@ -81,13 +80,13 @@ const Cards = ({products}: CardsProps) => {
                         </Grid>
                     ))
                 ) : (
-                    <Typography>Aucun produit trouvé.</Typography> // ✅ Message si aucun produit ne correspond
+                    <Typography>Aucun produit trouvé.</Typography>
                 )}
             </Grid>
         </Box>
     );
 }
-// Styled-components pour le style de la carte
+
 const StyledCard = styled.div`
     .card {
         --background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);
@@ -95,7 +94,7 @@ const StyledCard = styled.div`
         height: 254px;
         padding: 5px;
         border-radius: 1rem;
-        overflow: hidden; /* Empêche les éléments de dépasser */
+        overflow: hidden; 
         background: var(--background);
         position: relative;
         z-index: 1;
@@ -168,16 +167,16 @@ const StyledCard = styled.div`
     }
 
     .card-img {
-        width: 100%; /* Garder la taille de la carte */
+        width: 100%; 
         height: 100%;
-        object-fit: contain; /* L'image va être ajustée pour ne pas être coupée */
-        border-radius: 1rem; /* Applique le border-radius de base */
+        object-fit: contain; 
+        border-radius: 1rem; 
         transition: opacity 0.5s ease, border-radius 0.3s ease;
     }
 
     .card:hover .card-img {
-        opacity: 0.3; /* L'image devient plus transparente au survol */
-        border-radius: 0.5rem; /* On réduit le rayon du border-radius au survol */
+        opacity: 0.3; 
+        border-radius: 0.5rem; 
     }
 `;
 

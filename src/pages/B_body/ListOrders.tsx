@@ -29,7 +29,7 @@ const ListOrders = () => {
             setLoading(false);
             return;
         }
-        // va chercher une requete GET dans l'apiSpringBoot pour récupérer les commandes par email
+        // va chercher une requete GET dans l'api pour récupérer les commandes par email
         const fetchOrders = async () => {
             try {
                 const data = await getData(`/orders/by-email/${email}`);
