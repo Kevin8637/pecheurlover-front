@@ -18,8 +18,8 @@ const Footer: FC<{}> = ({}) => {
                 <div className="footer-content">
                     <p>&copy; 2025 PecheurLover</p>
                     <img src={"/logo.png"} alt={"logo"} className={"footer-logo"}/>
-
                     <p>Tous droits réservés</p>
+                    <a href="">Mentions légales</a>
                 </div>
             </footer>
         </Box>
