@@ -58,8 +58,10 @@ const Home = () => {
             setIsLogged(true);
             navigate("/dashboard");
         } catch (err: any) {
-            if (err.response && err.response.data) {
-                setError(err.response.data.message || "Erreur lors de la connexion");
+            if (err.response && err.response.status === 401) {
+                setError("L'email ou le mot de passe est incorrect");
+            } else if (err.response && err.response.data?.message) {
+                setError(err.response.data.message);
             } else {
                 setError("Erreur réseau ou serveur");
             }
@@ -85,6 +87,7 @@ const Home = () => {
                                 <input placeholder="Entre ton mot de passe" className="form_style" type="password" value={password} onChange={(e) => setPassword(e.target.value)}
                                        required/>
                             </div>
+                            {error && <p style={{color: "red", marginTop: "10px"}}>{error}</p>}
                             <button type="submit" className="btn">SE CONNECTER</button>
                             <p>Pas encore de compte ? <Link to="/register">S'inscrire ici</Link></p>
                         </form>
