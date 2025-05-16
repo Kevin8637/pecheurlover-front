@@ -1,7 +1,7 @@
 import React, {FC, useContext, useState} from "react";
 import apiSpringBoot from "../../api/apiSpringBoot";
 import {Box, Button, Typography} from "@mui/material";
-import {ShoppingCartContext} from "../dashbaordBody/shoppingCart/ShoppingCartContext";
+import {ShoppingCartContext} from "../dashboardBody/shoppingCart/ShoppingCartContext";
 import {useNavigate} from "react-router-dom";
 
 type InvoiceResponse = {

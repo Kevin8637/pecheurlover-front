@@ -1,18 +1,16 @@
-import '../../styles/LoginStyles.css';
-import React, {useState, useEffect, useContext} from "react";
+import React, {FC, useContext, useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
 import {createGlobalStyle} from "styled-components";
 import apiSpringBoot from "../../api/apiSpringBoot";
 
-
-const Home = () => {
-    const [saumons, setSaumons] = useState([]);
-    const navigate = useNavigate();
-    const {isLogged, setIsLogged} = useContext(AuthContext);
+const Register: FC<{}> = ({}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
+    const [saumons, setSaumons] = useState([]);
+    const navigate = useNavigate();
 
     const GlobalStyle = createGlobalStyle`
         body {
@@ -21,10 +19,6 @@ const Home = () => {
             overflow: hidden;
         }
     `;
-
-    interface LoginResponse {
-        token: string;
-    }
 
     useEffect(() => {
         const handleClick = (event: any) => {
@@ -43,23 +37,26 @@ const Home = () => {
         };
     }, []);
 
-    const handleLogin = async (e: React.FormEvent) => {
+    // Fonction de connexion
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
 
+        if (password !== confirmPassword) {
+            setError("Les mots de passe ne correspondent pas.");
+            return;
+        }
+
         try {
-            const response = await apiSpringBoot.post<LoginResponse>("/auth/login", {
+            await apiSpringBoot.post("/auth/register", {
                 email,
                 password
             });
 
-            const token = response.data.token;
-            localStorage.setItem("token", token);
-            setIsLogged(true);
-            navigate("/dashboard");
+            navigate("/");
         } catch (err: any) {
             if (err.response && err.response.data) {
-                setError(err.response.data.message || "Erreur lors de la connexion");
+                setError(err.response.data.message || "Erreur lors de l'inscription");
             } else {
                 setError("Erreur réseau ou serveur");
             }
@@ -74,19 +71,26 @@ const Home = () => {
             <div className="app">
                 <div className="container">
                     <div className="form_area">
-                        <p className="title">Se connecter</p>
-                        <form onSubmit={handleLogin}>
+                        <p className="title">S'inscrire</p>
+                        <form onSubmit={handleRegister}>
                             <div className="form_group">
                                 <label className="sub_title">Email</label>
-                                <input placeholder="Entre ton email" className="form_style" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+                                <input placeholder="Entre ton email" className="form_style" type="email" value={email}
+                                       onChange={(e) => setEmail(e.target.value)} required/>
                             </div>
                             <div className="form_group">
                                 <label className="sub_title">Mot de passe</label>
-                                <input placeholder="Entre ton mot de passe" className="form_style" type="password" value={password} onChange={(e) => setPassword(e.target.value)}
-                                       required/>
+                                <input placeholder="Entre ton mot de passe" className="form_style" type="password" value={password}
+                                       onChange={(e) => setPassword(e.target.value)} required/>
                             </div>
-                            <button type="submit" className="btn">SE CONNECTER</button>
-                            <p>Pas encore de compte ? <Link to="/register">S'inscrire ici</Link></p>
+                            <div className="form_group">
+                                <label className="sub_title">Confirmation du mot de passe</label>
+                                <input placeholder="Entre ton mot de passe" className="form_style" value={confirmPassword}
+                                       onChange={(e) => setConfirmPassword(e.target.value)} type="password" required/>
+                            </div>
+                            {error && <p style={{color: "indianred"}}>{error}</p>}
+                            <button type="submit" className="btn">S'INSCRIRE</button>
+                            <p>Déjà un compte ? <Link to="/">Se connecter ici</Link></p>
                         </form>
                     </div>
                 </div>
@@ -108,4 +112,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Register;

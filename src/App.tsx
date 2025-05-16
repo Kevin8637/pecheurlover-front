@@ -9,8 +9,9 @@ import {BrowserRouter, Route, Routes, useLocation} from "react-router-dom";
 import LayoutWithBar from "./components/layouts/LayoutWithBar";
 import LayoutWithoutBar from "./components/layouts/LayoutWithoutBar";
 import {AuthContext} from './context/AuthContext';
-import {ShoppingCartProvider} from "./components/dashbaordBody/shoppingCart/ShoppingCartContext";
+import {ShoppingCartProvider} from "./components/dashboardBody/shoppingCart/ShoppingCartContext";
 import ListOrders from "./pages/B_body/ListOrders";
+import Register from "./pages/B_body/Register";
 
 // Composant pour gérer les titres dynamiques
 const PageTitleUpdater = () => {
@@ -57,6 +58,7 @@ function App() {
                             ) : (
                                 <Route path="/" element={<LayoutWithoutBar/>}>
                                     <Route path="/" element={<Home/>}/>
+                                    <Route path="/register" element={<Register/>}/>
                                 </Route>
                             )}
                         </Routes>

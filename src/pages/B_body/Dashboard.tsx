@@ -1,8 +1,8 @@
 import {FC} from 'react';
 import {Box} from "@mui/material";
 import ProductSelection from "../../components/ProductSelection";
-import ListProductInOrder from "../../components/dashbaordBody/aside/ListProductInOrder";
-import ProductsList from "../../components/dashbaordBody/ProductsList";
+import ListProductInOrder from "../../components/dashboardBody/aside/ListProductInOrder";
+import ProductsList from "../../components/dashboardBody/ProductsList";
 import Footer from "../C_footer/Footer";
 
 const Dashboard: FC<{}> = ({}) => {
