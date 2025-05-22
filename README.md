@@ -8,11 +8,11 @@ de présenter le détail des produits.
 Langage principal : React
 
 Frameworks supplémentaires :
-React-router
-Material UI
-Axios
-Dexie
-react-hook-form
+ - React-router
+ - Material UI
+ - Axios
+ - Dexie
+ - react-hook-form
 
 Packages et architecture :
 
@@ -23,12 +23,12 @@ Packages et architecture :
 - style : regroupe les fichier CSS du site
 
 Fonctionnalités principales :
-Inscription/ Connexion
-Accès à une liste de produits et à leurs détails
-Ajout des produits au panier
-Récapitulatif de commande
-Historique des commandes
-Recherche d’un produit
+ - Inscription/ Connexion
+ - Accès à une liste de produits et à leurs détails
+ - Ajout des produits au panier
+ - Récapitulatif de commande
+ - Historique des commandes
+ - Recherche d’un produit
 
 Installation et lancement :
 Étapes pour lancer le projet en local
