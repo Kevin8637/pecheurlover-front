@@ -7,21 +7,26 @@ import {ShoppingCartContext} from "./shoppingCart/ShoppingCartContext";
 import {useNavigate} from "react-router-dom";
 
 interface CardsProps {
-    products: ProductItem[];
+    products: ProductItem[]; // Liste des produits à afficher
 }
 
 const Cards = ({products}: CardsProps) => {
-    const cartContext = useContext(ShoppingCartContext);
-    const [allProducts, setAllProducts] = useState<ProductItem[] | null>(null);
-    const [error, setError] = useState<string | null>(null);
-    const navigate = useNavigate();
+    const cartContext = useContext(ShoppingCartContext); // Contexte du panier
+    const [allProducts, setAllProducts] = useState<ProductItem[] | null>(null); // Tous les produits récupérés
+    const [error, setError] = useState<string | null>(null); // Gestion des erreurs
+    const navigate = useNavigate(); // Permet la navigation vers une autre page
 
+    // Redirection vers la page de détail d’un produit
     const viewDetailsProduct = (id: number) => {
         navigate(`/product/${id}`);
     };
+
+    // Capitalise la première lettre d’un mot
     const capitalizeFirstLetter = (str: string) => {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     };
+
+    // Récupère la liste complète des produits depuis l’API
     const hydrateCollection = async () => {
         try {
             const response = await apiSpringBoot.get<ProductItem[]>("products/all");
@@ -32,20 +37,27 @@ const Cards = ({products}: CardsProps) => {
         }
     };
 
+    // Récupération des produits au montage du composant
     useEffect(() => {
         hydrateCollection();
     }, []);
+
+    // Affichage d’un message d’erreur
     if (error) return <Typography color="error">{error}</Typography>;
+    // Affichage du chargement si les données ne sont pas encore prêtes
     if (!allProducts) return <Typography>Chargement...</Typography>;
 
+    // Message si aucun produit n’est disponible
     if (allProducts.length === 0) {
         return <Typography>Aucun produit disponible.</Typography>;
     }
+
+    // Vérifie la disponibilité du contexte
     if (!cartContext) {
         return <Typography color="error">Erreur : Contexte du panier non disponible</Typography>;
     }
 
-    const {addShoppingCart} = cartContext;
+    const {addShoppingCart} = cartContext; // Fonction pour ajouter un produit au panier
 
     return (
         <Box mt={2}>
@@ -86,6 +98,7 @@ const Cards = ({products}: CardsProps) => {
     );
 }
 
+// Style personnalisé pour les cartes produit
 const StyledCard = styled.div`
     .card {
         --background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);
@@ -93,7 +106,7 @@ const StyledCard = styled.div`
         height: 254px;
         padding: 5px;
         border-radius: 1rem;
-        overflow: hidden; 
+        overflow: hidden;
         background: var(--background);
         position: relative;
         z-index: 1;
@@ -166,16 +179,16 @@ const StyledCard = styled.div`
     }
 
     .card-img {
-        width: 100%; 
+        width: 100%;
         height: 100%;
-        object-fit: contain; 
-        border-radius: 1rem; 
+        object-fit: contain;
+        border-radius: 1rem;
         transition: opacity 0.5s ease, border-radius 0.3s ease;
     }
 
     .card:hover .card-img {
-        opacity: 0.3; 
-        border-radius: 0.5rem; 
+        opacity: 0.3;
+        border-radius: 0.5rem;
     }
 `;
 

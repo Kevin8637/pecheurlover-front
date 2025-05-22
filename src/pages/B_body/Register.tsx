@@ -4,7 +4,9 @@ import {AuthContext} from "../../context/AuthContext";
 import {createGlobalStyle} from "styled-components";
 import apiSpringBoot from "../../api/apiSpringBoot";
 
+// Composant d'inscription utilisateur
 const Register: FC<{}> = ({}) => {
+    // Etats locaux pour les champs du formulaire, les erreurs et l'affichage des saumons
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -12,6 +14,7 @@ const Register: FC<{}> = ({}) => {
     const [saumons, setSaumons] = useState([]);
     const navigate = useNavigate();
 
+    // Style global appliqué à la page
     const GlobalStyle = createGlobalStyle`
         body {
             background-color: #87CEEB;
@@ -20,6 +23,7 @@ const Register: FC<{}> = ({}) => {
         }
     `;
 
+    // Effet pour faire apparaître des "saumons" à chaque clic sur la page
     useEffect(() => {
         const handleClick = (event: any) => {
             const newSaumon = {
@@ -37,10 +41,12 @@ const Register: FC<{}> = ({}) => {
         };
     }, []);
 
+    // Gestion de la soumission du formulaire d'inscription
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
 
+        // Validation du mot de passe selon des critères de sécurité
         const isPasswordValid = (password: string) => {
             const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\S]{12,}$/;
             return regex.test(password);
@@ -50,11 +56,13 @@ const Register: FC<{}> = ({}) => {
             return;
         }
 
+        // Vérification de la confirmation du mot de passe
         if (password !== confirmPassword) {
             setError("Les mots de passe ne correspondent pas.");
             return;
         }
 
+        // Appel API pour enregistrer l'utilisateur, gestion des erreurs et redirection en cas de succès
         try {
             await apiSpringBoot.post("/auth/register", {
                 email,
@@ -71,7 +79,7 @@ const Register: FC<{}> = ({}) => {
         }
     };
 
-
+    // Rendu du composant : formulaire d'inscription, gestion des erreurs, et affichage des saumons cliqués
     return (
         <>
             <GlobalStyle/>
@@ -88,12 +96,14 @@ const Register: FC<{}> = ({}) => {
                             </div>
                             <div className="form_group">
                                 <label className="sub_title">Mot de passe</label>
-                                <input placeholder="Entre ton mot de passe" className="form_style" type="password" value={password}
+                                <input placeholder="Entre ton mot de passe" className="form_style" type="password"
+                                       value={password}
                                        onChange={(e) => setPassword(e.target.value)} required/>
                             </div>
                             <div className="form_group">
                                 <label className="sub_title">Confirmation du mot de passe</label>
-                                <input placeholder="Entre ton mot de passe" className="form_style" value={confirmPassword}
+                                <input placeholder="Entre ton mot de passe" className="form_style"
+                                       value={confirmPassword}
                                        onChange={(e) => setConfirmPassword(e.target.value)} type="password" required/>
                             </div>
                             {error && (
@@ -116,6 +126,7 @@ const Register: FC<{}> = ({}) => {
                         </form>
                     </div>
                 </div>
+                {/* Affichage des saumons créés lors des clics */}
                 {saumons.map((saumon: any) => (
                     <div key={saumon.id} className="saumon-wrapper" style={{left: saumon.x, top: saumon.y}}>
                         <div className="saumon-container">

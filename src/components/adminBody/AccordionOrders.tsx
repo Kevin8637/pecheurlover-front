@@ -8,16 +8,23 @@ import {Box} from "@mui/material";
 import {getData} from "../../api/apiSpringBoot";
 
 export default function ControlledAccordions() {
+    // État pour suivre quel panneau est ouvert
     const [expanded, setExpanded] = React.useState<string | false>(false);
+
+    // Liste des factures récupérées depuis l’API
     const [invoices, setInvoices] = React.useState<any[]>([]);
+
+    // Détails des commandes par facture (clé = id_invoice)
     const [ordersDetails, setOrdersDetails] = React.useState<Record<number, any[]>>({});
+
+    // Gère l'ouverture/fermeture d'un panneau
     const handleChange = (panel: string) => async (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
         if (isExpanded) {
             const invoiceId = parseInt(panel.replace("panel", ""));
             await fetchOrdersDetails(invoiceId);
         } else {
-
+            // Supprime les détails des commandes si panneau fermé
             setOrdersDetails(prevState => {
                 const updatedState = {...prevState};
                 delete updatedState[parseInt(panel.replace("panel", ""))];
@@ -25,6 +32,13 @@ export default function ControlledAccordions() {
             });
         }
     };
+
+    // Appel initial pour récupérer toutes les factures
+    React.useEffect(() => {
+        fetchInvoices();
+    }, []);
+
+    // Récupère toutes les factures
     const fetchInvoices = async () => {
         try {
             const data = await getData("/invoices/all");
@@ -33,11 +47,10 @@ export default function ControlledAccordions() {
             console.error("Erreur lors de la récupération des factures : ", error);
         }
     };
-    const fetchOrdersDetails = async (id_invoice: number) => {
-        if (ordersDetails[id_invoice]) {
 
-            return;
-        }
+    // Récupère les détails d'une facture si non déjà récupérés
+    const fetchOrdersDetails = async (id_invoice: number) => {
+        if (ordersDetails[id_invoice]) return;
         try {
             const data = await getData(`/orders/by-invoice/${id_invoice}`);
             const normalizedData = Array.isArray(data) ? data : [data];
@@ -49,12 +62,9 @@ export default function ControlledAccordions() {
             console.error("Erreur lors de la récupération des détails des commandes : ", error);
         }
     };
-    React.useEffect(() => {
-        fetchInvoices();
-    }, []);
 
     return (
-        <Box sx={{width: '80%', display: "flex", justifyContent: "center", flexDirection: "column", margin: "auto"}}>
+        <Box sx={{width: '80%', margin: "auto", display: "flex", flexDirection: "column"}}>
             {invoices.map((invoice, index) => (
                 <Accordion expanded={expanded === `panel${index + 1}`} onChange={handleChange(`panel${index + 1}`)}
                            key={invoice.id_invoice}>
@@ -63,14 +73,8 @@ export default function ControlledAccordions() {
                         aria-controls={`panel${index + 1}bh-content`}
                         id={`panel${index + 1}bh-header`}
                     >
-                        <Box sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            width: '100%',
-                            flexWrap: 'wrap',
-                            gap: 1
-                        }}>
+                        {/* Résumé des infos de facture */}
+                        <Box sx={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', width: '100%'}}>
                             <Typography sx={{flexBasis: {xs: '100%', sm: '45%', md: '23%'}}}>
                                 {new Date(invoice.invoice_date).toLocaleDateString()}
                             </Typography>
@@ -86,29 +90,27 @@ export default function ControlledAccordions() {
                         </Box>
                     </AccordionSummary>
                     <AccordionDetails>
+                        {/* Affiche les détails des commandes */}
                         <Box>
                             {Array.isArray(ordersDetails[invoice.id_invoice]) && ordersDetails[invoice.id_invoice].length > 0 ? (
-                                ordersDetails[invoice.id_invoice].map((order: any, idx: number) => {
-                                    return (
-                                        <Box key={idx} sx={{
-                                            display: "flex",
-                                            flexDirection: "row",
-                                            justifyContent: "space-around",
-                                            border: "1px solid black",
-                                            alignItems: "center"
-                                        }}>
-                                            {order.productImage ? (
-                                                <img src={order.productImage} alt={order.productName || "Produit"}
-                                                     style={{width: '70px', height: '40px'}}/>
-                                            ) : (
-                                                <Typography>Aucune image disponible</Typography>
-                                            )}
-                                            <Typography>{order.productName || "Nom du produit indisponible"}</Typography>
-                                            <Typography>{order.quantity} x {order.price.toFixed(2)} €</Typography>
-                                            <Typography>{(order.quantity * order.price).toFixed(2)} €</Typography>
-                                        </Box>
-                                    );
-                                })
+                                ordersDetails[invoice.id_invoice].map((order: any, idx: number) => (
+                                    <Box key={idx} sx={{
+                                        display: "flex",
+                                        justifyContent: "space-around",
+                                        border: "1px solid black",
+                                        alignItems: "center"
+                                    }}>
+                                        {order.productImage ? (
+                                            <img src={order.productImage} alt={order.productName || "Produit"}
+                                                 style={{width: '70px', height: '40px'}}/>
+                                        ) : (
+                                            <Typography>Aucune image disponible</Typography>
+                                        )}
+                                        <Typography>{order.productName || "Nom du produit indisponible"}</Typography>
+                                        <Typography>{order.quantity} x {order.price.toFixed(2)} €</Typography>
+                                        <Typography>{(order.quantity * order.price).toFixed(2)} €</Typography>
+                                    </Box>
+                                ))
                             ) : (
                                 <Typography>Chargement des détails des commandes...</Typography>
                             )}

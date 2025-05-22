@@ -5,8 +5,9 @@ import {AuthContext} from "../../context/AuthContext";
 import {createGlobalStyle} from "styled-components";
 import apiSpringBoot from "../../api/apiSpringBoot";
 
-
+// Composant principal de la page d'accueil/connexion
 const Home = () => {
+    // Déclaration des états locaux pour la gestion des saumons, de la navigation, de l'authentification et des champs du formulaire
     const [saumons, setSaumons] = useState([]);
     const navigate = useNavigate();
     const {isLogged, setIsLogged} = useContext(AuthContext);
@@ -14,6 +15,7 @@ const Home = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
+    // Style global appliqué à la page via styled-components
     const GlobalStyle = createGlobalStyle`
         body {
             background-color: #87CEEB;
@@ -22,10 +24,12 @@ const Home = () => {
         }
     `;
 
+    // Interface pour typer la réponse du login
     interface LoginResponse {
         token: string;
     }
 
+    // Effet pour gérer l'apparition des "saumons" à chaque clic sur la page
     useEffect(() => {
         const handleClick = (event: any) => {
             const newSaumon = {
@@ -33,6 +37,7 @@ const Home = () => {
                 x: event.clientX - 100,
                 y: event.clientY - 100,
             };
+            // Ajoute un nouveau saumon à chaque clic
             // @ts-ignore
             setSaumons((prevSaumons) => [...prevSaumons, newSaumon]);
         };
@@ -43,21 +48,25 @@ const Home = () => {
         };
     }, []);
 
+    // Fonction de gestion de la soumission du formulaire de connexion
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
 
         try {
+            // Requête API pour authentifier l'utilisateur
             const response = await apiSpringBoot.post<LoginResponse>("/auth/login", {
                 email,
                 password
             });
 
+            // Stockage du token et redirection vers le dashboard en cas de succès
             const token = response.data.token;
             localStorage.setItem("token", token);
             setIsLogged(true);
             navigate("/dashboard");
         } catch (err: any) {
+            // Gestion des différentes erreurs possibles lors de la connexion
             if (err.response && err.response.status === 401) {
                 setError("L'email ou le mot de passe est incorrect");
             } else if (err.response && err.response.data?.message) {
@@ -68,7 +77,7 @@ const Home = () => {
         }
     };
 
-
+    // Rendu du composant : formulaire de connexion, gestion des erreurs et affichage des saumons cliqués
     return (
         <>
             <GlobalStyle/>
@@ -80,11 +89,13 @@ const Home = () => {
                         <form onSubmit={handleLogin}>
                             <div className="form_group">
                                 <label className="sub_title">Email</label>
-                                <input placeholder="Entre ton email" className="form_style" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+                                <input placeholder="Entre ton email" className="form_style" type="email" value={email}
+                                       onChange={(e) => setEmail(e.target.value)} required/>
                             </div>
                             <div className="form_group">
                                 <label className="sub_title">Mot de passe</label>
-                                <input placeholder="Entre ton mot de passe" className="form_style" type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+                                <input placeholder="Entre ton mot de passe" className="form_style" type="password"
+                                       value={password} onChange={(e) => setPassword(e.target.value)}
                                        required/>
                             </div>
                             {error && <p style={{color: "red", marginTop: "10px"}}>{error}</p>}
@@ -93,6 +104,7 @@ const Home = () => {
                         </form>
                     </div>
                 </div>
+                {/* Affichage des saumons créés lors des clics */}
                 {saumons.map((saumon: any) => (
                     <div key={saumon.id} className="saumon-wrapper" style={{left: saumon.x, top: saumon.y}}>
                         <div className="saumon-container">
@@ -111,4 +123,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Home
