@@ -34,9 +34,9 @@ const ProductDetails: FC = () => {
             <Typography variant="h3" sx={{textAlign: "center", m: 2}}>
                 {product.name.toUpperCase()}
             </Typography>
-            <Box sx={{width:"80%", margin:"auto", border:"1px solid black", borderRadius:"25px",
+            <Box className="product-details-container" sx={{width:"80%", margin:"auto", border:"1px solid black", borderRadius:"25px",
                 boxShadow: "0 0 5px 2px rgba(0, 0, 0, 0.5)"}}>
-                <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', mt: 3}}>
+                <Box className="product-details-main" sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', mt: 3}}>
                     <img src={product.imageUrl} alt={product.name} style={{width: "300px", borderRadius: "10px"}}/>
                     <Box sx={{ml: 5}}>
                         <Typography variant="h5">Détails du produit :</Typography>

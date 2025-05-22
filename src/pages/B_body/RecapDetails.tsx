@@ -15,7 +15,7 @@ const RecapDetails = () => {
             <Typography variant="h4" sx={{textAlign: "center", margin: "20px"}}>
                 Récapitulatif de votre commande
             </Typography>
-            <Box sx={{
+            <Box className="recap-container" sx={{
                 display: "flex",
                 justifyContent: "center",
                 border: "1px solid black",

@@ -37,10 +37,18 @@ const Register: FC<{}> = ({}) => {
         };
     }, []);
 
-    // Fonction de connexion
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
+
+        const isPasswordValid = (password: string) => {
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\S]{12,}$/;
+            return regex.test(password);
+        };
+        if (!isPasswordValid(password)) {
+            setError("Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
+            return;
+        }
 
         if (password !== confirmPassword) {
             setError("Les mots de passe ne correspondent pas.");
@@ -56,7 +64,7 @@ const Register: FC<{}> = ({}) => {
             navigate("/");
         } catch (err: any) {
             if (err.response && err.response.data) {
-                setError(err.response.data.message || "Erreur lors de l'inscription");
+                setError(err.response.data.message || "Email déjà utilisé");
             } else {
                 setError("Erreur réseau ou serveur");
             }
@@ -88,7 +96,21 @@ const Register: FC<{}> = ({}) => {
                                 <input placeholder="Entre ton mot de passe" className="form_style" value={confirmPassword}
                                        onChange={(e) => setConfirmPassword(e.target.value)} type="password" required/>
                             </div>
-                            {error && <p style={{color: "indianred"}}>{error}</p>}
+                            {error && (
+                                <p style={{
+                                    color: "indianred",
+                                    margin: "10px 0",
+                                    fontSize: "0.9rem",
+                                    wordWrap: "break-word",
+                                    whiteSpace: "normal",
+                                    width: "100%",
+                                    maxWidth: "100%",
+                                    overflowWrap: "break-word"
+                                }}>
+                                    {error}
+                                </p>
+                            )}
+
                             <button type="submit" className="btn">S'INSCRIRE</button>
                             <p>Déjà un compte ? <Link to="/">Se connecter ici</Link></p>
                         </form>

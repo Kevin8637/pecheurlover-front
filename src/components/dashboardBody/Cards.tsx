@@ -38,7 +38,6 @@ const Cards = ({products}: CardsProps) => {
     if (error) return <Typography color="error">{error}</Typography>;
     if (!allProducts) return <Typography>Chargement...</Typography>;
 
-    // Si `allProducts` est vide
     if (allProducts.length === 0) {
         return <Typography>Aucun produit disponible.</Typography>;
     }

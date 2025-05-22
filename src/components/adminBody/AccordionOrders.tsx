@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {Box} from "@mui/material";
 import {getData} from "../../api/apiSpringBoot";
-import {data} from "react-router-dom";
 
 export default function ControlledAccordions() {
     const [expanded, setExpanded] = React.useState<string | false>(false);
@@ -64,24 +63,32 @@ export default function ControlledAccordions() {
                         aria-controls={`panel${index + 1}bh-content`}
                         id={`panel${index + 1}bh-header`}
                     >
-                        <Typography component="span" sx={{width: '25%'}}>
-                            {new Date(invoice.invoice_date).toLocaleDateString()}
-                        </Typography>
-                        <Typography component="span" sx={{width: '25%', color: 'text.secondary'}}>
-                            {invoice.id_invoice}
-                        </Typography>
-                        <Typography component="span" sx={{width: '25%', color: 'text.secondary'}}>
-                            {invoice.email}
-                        </Typography>
-                        <Typography component="span" sx={{width: '25%', color: 'text.secondary'}}>
-                            {invoice.total_price} €
-                        </Typography>
+                        <Box sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            width: '100%',
+                            flexWrap: 'wrap',
+                            gap: 1
+                        }}>
+                            <Typography sx={{flexBasis: {xs: '100%', sm: '45%', md: '23%'}}}>
+                                {new Date(invoice.invoice_date).toLocaleDateString()}
+                            </Typography>
+                            <Typography sx={{flexBasis: {xs: '100%', sm: '45%', md: '23%'}}} color="text.secondary">
+                                Facture N°{invoice.id_invoice}
+                            </Typography>
+                            <Typography sx={{flexBasis: {xs: '100%', sm: '45%', md: '23%'}}} color="text.secondary">
+                                {invoice.email}
+                            </Typography>
+                            <Typography sx={{flexBasis: {xs: '100%', sm: '45%', md: '23%'}}} color="text.secondary">
+                                {invoice.total_price} €
+                            </Typography>
+                        </Box>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Box>
                             {Array.isArray(ordersDetails[invoice.id_invoice]) && ordersDetails[invoice.id_invoice].length > 0 ? (
                                 ordersDetails[invoice.id_invoice].map((order: any, idx: number) => {
-                                    console.log("📦 Order reçu:", order); // Debug
                                     return (
                                         <Box key={idx} sx={{
                                             display: "flex",

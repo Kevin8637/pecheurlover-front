@@ -85,7 +85,7 @@ const Buttons: FC<{ totalPrice: number; produits: any[] }> = ({totalPrice: props
                     newStock: item.stock - item.quantity
                 });
             });
-            await Promise.all(orderPromises); // ✅ Exécute toutes les requêtes en parallèle
+            await Promise.all(orderPromises);
             clearShoppingCart();
             navigate("/dashboard");
 
