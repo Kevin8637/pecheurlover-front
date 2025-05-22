@@ -4,10 +4,11 @@ import Cards from "./Cards";
 import apiSpringBoot from "../../api/apiSpringBoot";
 
 const ProductsList: FC = () => {
-    const [products, setProducts] = useState<any[]>([]);
-    const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [products, setProducts] = useState<any[]>([]); // Liste de tous les produits
+    const [filteredProducts, setFilteredProducts] = useState<any[]>([]); // Produits filtrés selon la recherche
+    const [searchTerm, setSearchTerm] = useState(""); // Terme de recherche
 
+    // Récupération des produits à l'initialisation
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -21,16 +22,7 @@ const ProductsList: FC = () => {
         fetchProducts();
     }, []);
 
-    const handleSearch = () => {
-        if (searchTerm.trim() === "") {
-            setFilteredProducts(products);
-            return;
-        }
-        const filtered = products.filter((product) =>
-            product.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setFilteredProducts(filtered);
-    };
+    // Mise à jour des produits filtrés à chaque modification du terme de recherche
     useEffect(() => {
         if (searchTerm.trim() === "") {
             setFilteredProducts(products);
@@ -43,6 +35,17 @@ const ProductsList: FC = () => {
         }
     }, [searchTerm, products]);
 
+    // Optionnel : permet un filtrage manuel au clic si souhaité
+    const handleSearch = () => {
+        if (searchTerm.trim() === "") {
+            setFilteredProducts(products);
+            return;
+        }
+        const filtered = products.filter((product) =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredProducts(filtered);
+    };
 
     return (
         <div id="products">
