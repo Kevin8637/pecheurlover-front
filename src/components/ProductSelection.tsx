@@ -5,9 +5,29 @@ import Typography from "@mui/material/Typography";
 const ProductSelection: FC<{}> = ({}) => {
     return (
         <>
-            <Box sx={{width: "100%", display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center", margin:"50px"}}>
+            <Box
+                className="product-selection"
+                sx={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: "50px"
+                }}
+            >
                 <img className="fish" src="/fish.jpg" alt="poisson mis en avant"/>
-                <Box sx={{width:"50%", marginLeft:"50px", height:"300px", display:"flex", flexDirection:"column", justifyContent:"space-around"}}>
+                <Box
+                    className="product-description"
+                    sx={{
+                        width: "50%",
+                        marginLeft: "50px",
+                        height: "300px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-around"
+                    }}
+                >
                     <h3>Nos saumons</h3>
                     <Typography>Le saumon est « anadrome » (migrateur pour se reproduire), amphibiotique (adapté à la
                         vie dans deux milieux aquatiques), potamotoque (il se reproduit en rivière) et thalassotrophe
@@ -19,6 +39,7 @@ const ProductSelection: FC<{}> = ({}) => {
                     <Typography>Prix : 10.28 €</Typography>
                 </Box>
             </Box>
+
             <hr/>
         </>
     );

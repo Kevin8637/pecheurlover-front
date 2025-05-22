@@ -1,5 +1,4 @@
 import {FC, useEffect, useState} from "react";
-import {Box} from "@mui/material";
 import SearchBar from "./SearchBar";
 import Cards from "./Cards";
 import apiSpringBoot from "../../api/apiSpringBoot";
@@ -46,11 +45,11 @@ const ProductsList: FC = () => {
 
 
     return (
-        <Box>
+        <div id="products">
             <h1>Nos produits</h1>
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} onSearch={handleSearch}/>
             <Cards products={filteredProducts}/>
-        </Box>
+        </div>
     );
 };
 

@@ -114,17 +114,112 @@ ul {
   height : 100px;
 }
 
+.footer-pecheurlover{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 @media (max-width: 768px) {
-  .App-header {
-    font-size: 16px;
+  .dashboard-container {
+    flex-direction: column !important;
   }
 
-  h1 {
-    font-size: 2em;
+  .dashboard-main {
+    width: 100% !important;
   }
 
-  .fish {
+  .dashboard-aside {
+    width: 100% !important;
+    border: none !important;
+  }
+
+  .product-selection {
+    flex-direction: column !important;
+    margin: 0px !important;
+  }
+
+  .product-selection img.fish {
     width: 100%;
     height: auto;
+    margin-bottom: 20px;
+  }
+
+  .product-description {
+    width: 100% !important;
+    margin-left: 5px !important;
+    height: auto !important;
+  }
+
+  .footer-content {
+    flex-direction: column !important;
+    text-align: center;
+    height: auto !important;
+    padding: 20px 10px;
+    gap: 10px;
+  }
+
+  .footer-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .footer-pecheurlover {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .recap-container {
+    width: 90% !important;
+    padding: 10px;
+  }
+
+  .recap-container li {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px;
+  }
+
+  .recap-container img {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 200px;
+    margin: auto;
+  }
+
+  .recap-container strong {
+    display: block;
+    margin-top: 5px;
+  }
+
+  .product-details-container {
+    width: 95% !important;
+    padding: 10px;
+  }
+
+  .product-details-main {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center;
+  }
+
+  .product-details-main img {
+    width: 80% !important;
+    max-width: 250px;
+    margin-bottom: 15px;
+  }
+
+  .product-details-main ul {
+    padding: 0;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .product-details-main li {
+    margin-bottom: 8px;
+  }
+
+  .product-details-container .cooking-tips {
+    margin-bottom: 10px;
   }
 }
