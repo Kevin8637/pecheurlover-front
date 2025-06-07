@@ -33,7 +33,7 @@ const PageTitleUpdater = () => {
         document.title = pageTitle;
     }, [location]);
 
-    return null; // Ce composant ne rend rien mais met à jour le titre
+    return null;
 };
 
 function App() {
@@ -44,21 +44,21 @@ function App() {
             <BrowserRouter>
                 <AuthContext.Provider value={{isLogged, setIsLogged}}>
                     <ShoppingCartProvider>
-                        <PageTitleUpdater/> {/* Utiliser le composant pour mettre à jour le titre */}
+                        <PageTitleUpdater/>
                         <Routes>
                             {isLogged ? (
                                 <Route path="/" element={<LayoutWithBar />}>
-                                    <Route index element={<Home />} /> {/* ✅ Route par défaut */}
+                                    <Route index element={<Home />} />
                                     <Route path="dashboard" element={<Dashboard />} />
-                                    <Route path="product/:id" element={<ProductDetails />} /> {/* ✅ Route relative */}
+                                    <Route path="product/:id" element={<ProductDetails />} />
                                     <Route path="recapOrder" element={<RecapDetails />} />
                                     <Route path="adminListOrders" element={<AdminListOrders />} />
                                     <Route path="listOrders" element={<ListOrders />} />
                                 </Route>
                             ) : (
                                 <Route path="/" element={<LayoutWithoutBar />}>
-                                    <Route index element={<Home />} /> {/* ✅ Route par défaut */}
-                                    <Route path="register" element={<Register />} /> {/* ✅ Route relative */}
+                                    <Route index element={<Home />} />
+                                    <Route path="register" element={<Register />} />
                                 </Route>
                             )}
                         </Routes>
