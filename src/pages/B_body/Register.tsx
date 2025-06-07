@@ -45,7 +45,6 @@ const Register: FC<{}> = ({}) => {
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
-
         // Validation du mot de passe selon des critères de sécurité
         const isPasswordValid = (password: string) => {
             const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\S]{12,}$/;
@@ -55,20 +54,17 @@ const Register: FC<{}> = ({}) => {
             setError("Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
             return;
         }
-
         // Vérification de la confirmation du mot de passe
         if (password !== confirmPassword) {
             setError("Les mots de passe ne correspondent pas.");
             return;
         }
-
         // Appel API pour enregistrer l'utilisateur, gestion des erreurs et redirection en cas de succès
         try {
             await apiSpringBoot.post("/auth/register", {
                 email,
                 password
             });
-
             navigate("/");
         } catch (err: any) {
             if (err.response && err.response.data) {

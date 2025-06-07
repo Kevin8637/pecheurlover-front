@@ -47,18 +47,18 @@ function App() {
                         <PageTitleUpdater/> {/* Utiliser le composant pour mettre à jour le titre */}
                         <Routes>
                             {isLogged ? (
-                                <Route path="/" element={<LayoutWithBar/>}>
-                                    <Route path="dashboard" element={<Dashboard/>}/>
-                                    <Route path="/product/:id" element={<ProductDetails/>}/>
-                                    <Route path="recapOrder" element={<RecapDetails/>}/>
-                                    <Route path="adminListOrders" element={<AdminListOrders/>}/>
-                                    <Route path="listOrders" element={<ListOrders/>}/>
-                                    <Route path="/" element={<Home/>}/>
+                                <Route path="/" element={<LayoutWithBar />}>
+                                    <Route index element={<Home />} /> {/* ✅ Route par défaut */}
+                                    <Route path="dashboard" element={<Dashboard />} />
+                                    <Route path="product/:id" element={<ProductDetails />} /> {/* ✅ Route relative */}
+                                    <Route path="recapOrder" element={<RecapDetails />} />
+                                    <Route path="adminListOrders" element={<AdminListOrders />} />
+                                    <Route path="listOrders" element={<ListOrders />} />
                                 </Route>
                             ) : (
-                                <Route path="/" element={<LayoutWithoutBar/>}>
-                                    <Route path="/" element={<Home/>}/>
-                                    <Route path="/register" element={<Register/>}/>
+                                <Route path="/" element={<LayoutWithoutBar />}>
+                                    <Route index element={<Home />} /> {/* ✅ Route par défaut */}
+                                    <Route path="register" element={<Register />} /> {/* ✅ Route relative */}
                                 </Route>
                             )}
                         </Routes>

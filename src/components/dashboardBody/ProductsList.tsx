@@ -35,7 +35,7 @@ const ProductsList: FC = () => {
         }
     }, [searchTerm, products]);
 
-    // Optionnel : permet un filtrage manuel au clic si souhaité
+    // Permet un filtrage manuel au clic
     const handleSearch = () => {
         if (searchTerm.trim() === "") {
             setFilteredProducts(products);

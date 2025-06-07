@@ -2,9 +2,13 @@ import React, {FC, useState} from 'react';
 import {Box, IconButton, Menu, MenuItem} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 const Header: FC<{}> = ({}) => {
     const navigate = useNavigate(); // Hook de navigation
+    const { setIsLogged } = useContext(AuthContext);
+
 
     // État pour gérer l'ouverture du menu
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -40,6 +44,7 @@ const Header: FC<{}> = ({}) => {
     // Déconnexion de l’utilisateur
     const handleLogout = () => {
         handleClose();
+        setIsLogged(false);
         localStorage.removeItem("token"); // Suppression du token
         navigate("/");
     };
