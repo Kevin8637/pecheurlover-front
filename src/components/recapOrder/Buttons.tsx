@@ -35,7 +35,7 @@ const Buttons: FC<{ totalPrice: number; produits: any[] }> = ({totalPrice: props
 
         try {
             produits.map((item) => ({
-                id_invoice: "ID_FACTURE_ICI",
+                id_invoice: item.id_invoice,
                 id_product: item.id_product,
                 quantity: item.quantity,
                 price: item.price,
