@@ -41,7 +41,7 @@ export default function ControlledAccordions() {
     // Récupère toutes les factures
     const fetchInvoices = async () => {
         try {
-            const data = await getData("/invoices/all");
+            const data = await getData("/invoices/admin/all");
             setInvoices(data);
         } catch (error) {
             console.error("Erreur lors de la récupération des factures : ", error);

@@ -8,6 +8,7 @@ import { AuthContext } from "../../context/AuthContext";
 const Header: FC<{}> = ({}) => {
     const navigate = useNavigate(); // Hook de navigation
     const { setIsLogged } = useContext(AuthContext);
+    const { userRole } = useContext(AuthContext);
 
 
     // État pour gérer l'ouverture du menu
@@ -77,7 +78,9 @@ const Header: FC<{}> = ({}) => {
                 transformOrigin={{vertical: 'top', horizontal: 'left'}}
             >
                 <MenuItem onClick={handleProduits}>Nos produits</MenuItem>
-                <MenuItem onClick={handleAdmin}>Mode Admin</MenuItem>
+                {userRole === 'ADMIN' && (
+                    <MenuItem onClick={handleAdmin}>Mode Admin</MenuItem>
+                )}
                 <MenuItem onClick={handleLogout}>Se déconnecter</MenuItem>
             </Menu>
         </Box>

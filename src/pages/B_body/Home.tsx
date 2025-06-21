@@ -10,7 +10,7 @@ const Home = () => {
     // Déclaration des états locaux pour la gestion des saumons, de la navigation, de l'authentification et des champs du formulaire
     const [saumons, setSaumons] = useState([]);
     const navigate = useNavigate();
-    const {isLogged, setIsLogged} = useContext(AuthContext);
+    const {isLogged, setIsLogged, setUserRole} = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -27,6 +27,7 @@ const Home = () => {
     // Interface pour typer la réponse du login
     interface LoginResponse {
         token: string;
+        role : string;
     }
 
     // Effet pour gérer l'apparition des "saumons" à chaque clic sur la page
@@ -62,8 +63,11 @@ const Home = () => {
 
             // Stockage du token et redirection vers le dashboard en cas de succès
             const token = response.data.token;
+            const role = response.data.role;
             localStorage.setItem("token", token);
+            localStorage.setItem("userRole", role);
             setIsLogged(true);
+            setUserRole(role);
             navigate("/dashboard");
         } catch (err: any) {
             // Gestion des différentes erreurs possibles lors de la connexion

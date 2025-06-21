@@ -48,7 +48,7 @@ function App() {
     return (
         <>
             <BrowserRouter>
-                <AuthContext.Provider value={{isLogged, setIsLogged}}>
+                <AuthContext.Provider value={{isLogged, setIsLogged, userRole: localStorage.getItem("userRole") || "", setUserRole: (role: string) => localStorage.setItem("userRole", role)}}>
                     <ShoppingCartProvider>
                         <PageTitleUpdater/>
                         <Routes>
