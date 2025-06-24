@@ -3,9 +3,9 @@ import {Box} from "@mui/material";
 import styled from "styled-components";
 
 interface SearchBarProps {
-    searchTerm: string; // Valeur actuelle de la recherche
-    setSearchTerm: (value: string) => void; // Mise à jour de la recherche
-    onSearch: () => void; // Fonction appelée lors de la recherche
+    searchTerm: string;
+    setSearchTerm: (value: string) => void;
+    onSearch: () => void;
 }
 
 const SearchBar: FC<SearchBarProps> = ({searchTerm, setSearchTerm, onSearch}) => {
@@ -21,7 +21,6 @@ const SearchBar: FC<SearchBarProps> = ({searchTerm, setSearchTerm, onSearch}) =>
     );
 };
 
-// Style pour le champ de recherche
 const StyledInput = styled.input`
     width: 300px;
     padding: 10px;

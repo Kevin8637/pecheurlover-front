@@ -11,7 +11,6 @@ type InvoiceResponse = {
 const Buttons: FC<{ totalPrice: number; produits: any[] }> = ({totalPrice: propsTotalPrice, produits}) => {
 
     const navigate = useNavigate();
-    // @ts-ignore
     const {clearShoppingCart, totalPrice: contextTotalPrice} = useContext(ShoppingCartContext);
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState(false);
@@ -58,7 +57,7 @@ const Buttons: FC<{ totalPrice: number; produits: any[] }> = ({totalPrice: props
                     return;
                 }
             }
-            // Création de facture + création de commandes + maj des stocks
+
             const invoiceResponse = await apiSpringBoot.post<InvoiceResponse>(
                 "/invoices/create",
                 {
@@ -71,7 +70,6 @@ const Buttons: FC<{ totalPrice: number; produits: any[] }> = ({totalPrice: props
 
             const {id_invoice} = invoiceResponse.data;
 
-            // Création de commandes + maj des stocks
             const orderPromises = produits.map(async (item) => {
                 await apiSpringBoot.post("/orders/create", {
                     id_invoice,
@@ -80,7 +78,6 @@ const Buttons: FC<{ totalPrice: number; produits: any[] }> = ({totalPrice: props
                     price: item.price,
                 });
 
-                // maj du stock du produit
                 await apiSpringBoot.put(`/products/${item.id_product}/update-stock`, {
                     newStock: item.stock - item.quantity
                 });

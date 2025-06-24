@@ -4,7 +4,6 @@ import {Box, Typography, Accordion, AccordionSummary, AccordionDetails} from "@m
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {getData} from "../../api/apiSpringBoot";
 
-// Définition du type Order pour typer les données de commande récupérées
 type Order = {
     id_invoice: number;
     id_product: number;
@@ -17,24 +16,20 @@ type Order = {
 };
 
 const ListOrders = () => {
-    // Récupération de l'email passé via la navigation (state)
     const location = useLocation();
     const email = location.state?.email || "";
 
-    // Etats pour stocker les commandes, le chargement, les erreurs et l'accordéon ouvert
     const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [expanded, setExpanded] = useState<string | false>(false);
 
-    // Effet pour charger les commandes à partir de l'API dès que l'email est disponible
     useEffect(() => {
         if (!email) {
             setError("Aucun email fourni.");
             setLoading(false);
             return;
         }
-        // Appel API pour récupérer les commandes liées à l'email
         const fetchOrders = async () => {
             try {
                 const data = await getData(`/orders/by-email/${email}`);
@@ -48,7 +43,6 @@ const ListOrders = () => {
         fetchOrders();
     }, [email]);
 
-    // Regroupement des commandes par facture (id_invoice) pour affichage dans des accordéons
     const groupedOrders = orders.reduce<Record<number, { orders: Order[], invoice_date: string, total_price: number }>>(
         (acc, order) => {
             if (!acc[order.id_invoice]) {
@@ -64,12 +58,10 @@ const ListOrders = () => {
         {}
     );
 
-    // Gestion de l'ouverture/fermeture des accordéons
     const handleChange = (panel: string) => (_: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
     };
 
-    // Rendu du composant : titre, gestion du chargement/erreur, et affichage des commandes groupées par facture
     return (
         <Box sx={{width: "80%", margin: "auto", textAlign: "center"}}>
             <Typography variant="h4" sx={{margin: "20px"}}>

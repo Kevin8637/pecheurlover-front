@@ -3,16 +3,12 @@ import {FC, useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import apiSpringBoot from '../../api/apiSpringBoot';
 
-// Composant d'affichage des détails d'un produit spécifique
 const ProductDetails: FC = () => {
-    // Récupération de l'ID du produit depuis les paramètres de l'URL
     const {id} = useParams<{ id: string }>();
-    // Etats locaux pour stocker les infos du produit, le chargement et les erreurs éventuelles
     const [product, setProduct] = useState<any | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Effet pour aller chercher les infos du produit via l'API dès que l'ID change
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -29,12 +25,10 @@ const ProductDetails: FC = () => {
         if (id) fetchProduct();
     }, [id]);
 
-    // Affichage conditionnel : loader, erreur, ou produit non trouvé
     if (loading) return <CircularProgress sx={{display: "block", margin: "auto", mt: 5}}/>;
     if (error) return <Typography color="error" sx={{textAlign: "center", mt: 5}}>{error}</Typography>;
     if (!product) return <Typography sx={{textAlign: "center", mt: 5}}>Produit non trouvé</Typography>;
 
-    // Affichage des détails du produit si tout va bien
     return (
         <>
             <Typography variant="h3" sx={{textAlign: "center", m: 2}}>

@@ -4,9 +4,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {createGlobalStyle} from "styled-components";
 import apiSpringBoot from "../../api/apiSpringBoot";
 
-// Composant d'inscription utilisateur
 const Register: FC<{}> = ({}) => {
-    // Etats locaux pour les champs du formulaire, les erreurs et l'affichage des saumons
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -14,7 +12,6 @@ const Register: FC<{}> = ({}) => {
     const [saumons, setSaumons] = useState([]);
     const navigate = useNavigate();
 
-    // Style global appliqué à la page
     const GlobalStyle = createGlobalStyle`
         body {
             background-color: #87CEEB;
@@ -23,7 +20,6 @@ const Register: FC<{}> = ({}) => {
         }
     `;
 
-    // Effet pour faire apparaître des "saumons" à chaque clic sur la page
     useEffect(() => {
         const handleClick = (event: any) => {
             const newSaumon = {
@@ -31,7 +27,7 @@ const Register: FC<{}> = ({}) => {
                 x: event.clientX - 100,
                 y: event.clientY - 100,
             };
-            // @ts-ignore
+
             setSaumons((prevSaumons) => [...prevSaumons, newSaumon]);
         };
 
@@ -41,11 +37,9 @@ const Register: FC<{}> = ({}) => {
         };
     }, []);
 
-    // Gestion de la soumission du formulaire d'inscription
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
-        // Validation du mot de passe selon des critères de sécurité
         const isPasswordValid = (password: string) => {
             const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])[A-Za-z\d\S]{12,}$/;
             return regex.test(password);
@@ -54,12 +48,10 @@ const Register: FC<{}> = ({}) => {
             setError("Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.");
             return;
         }
-        // Vérification de la confirmation du mot de passe
         if (password !== confirmPassword) {
             setError("Les mots de passe ne correspondent pas.");
             return;
         }
-        // Appel API pour enregistrer l'utilisateur, gestion des erreurs et redirection en cas de succès
         try {
             await apiSpringBoot.post("/auth/register", {
                 email,
@@ -75,7 +67,6 @@ const Register: FC<{}> = ({}) => {
         }
     };
 
-    // Rendu du composant : formulaire d'inscription, gestion des erreurs, et affichage des saumons cliqués
     return (
         <>
             <GlobalStyle/>
@@ -122,7 +113,6 @@ const Register: FC<{}> = ({}) => {
                         </form>
                     </div>
                 </div>
-                {/* Affichage des saumons créés lors des clics */}
                 {saumons.map((saumon: any) => (
                     <div key={saumon.id} className="saumon-wrapper" style={{left: saumon.x, top: saumon.y}}>
                         <div className="saumon-container">

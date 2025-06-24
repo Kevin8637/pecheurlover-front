@@ -20,7 +20,6 @@ const AdminSearchBar: FC<AdminSearchBarProps> = ({searchEmail, setSearchEmail}) 
     );
 };
 
-// Champ input stylisé avec styled-components
 const StyledInput = styled.input`
     width: 250px;
     padding: 10px;

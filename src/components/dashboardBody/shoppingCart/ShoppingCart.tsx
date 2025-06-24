@@ -10,7 +10,6 @@ const ShoppingCart = () => {
     const [email, setEmail] = useState("");
     const [error, setError] = useState(false);
 
-    // Redirige vers les commandes passées avec email fourni
     const goToOrders = () => {
         if (!email || !email.includes("@")) return;
         navigate("/listOrders", {state: {email}});
@@ -22,7 +21,6 @@ const ShoppingCart = () => {
 
     const {shoppingCart, removeShoppingCart, updateQuantity, clearShoppingCart} = cartContext;
 
-    // Valide le panier et redirige vers la page de récapitulatif
     const validateShoppingCart = () => {
         navigate("/recapOrder", {state: {produits: shoppingCart}});
     };
@@ -47,7 +45,6 @@ const ShoppingCart = () => {
                                     </Typography>
                                 </div>
 
-                                {/* Actions sur la quantité */}
                                 <div style={{
                                     display: "flex",
                                     alignItems: "center",
@@ -72,14 +69,11 @@ const ShoppingCart = () => {
                             </li>
                         ))}
                     </ul>
-
-                    {/* Total */}
                     <Typography variant="h6" sx={{textAlign: "right", mb: 2}}>
                         🛒 Total
                         : <strong>{shoppingCart.reduce((total, produit) => total + produit.totalPrice, 0).toFixed(2)}€</strong>
                     </Typography>
 
-                    {/* Boutons d'action */}
                     <Box sx={{display: "flex", gap: 2, justifyContent: "center", mb: 2}}>
                         <Button onClick={clearShoppingCart} variant="contained" color="error" fullWidth>
                             🗑️ Vider le panier
@@ -91,7 +85,6 @@ const ShoppingCart = () => {
                 </>
             )}
 
-            {/* Historique des commandes via email */}
             <Typography variant="h6" sx={{mt: 50}}>Mes précédentes commandes :</Typography>
             <TextField
                 label="Adresse email"

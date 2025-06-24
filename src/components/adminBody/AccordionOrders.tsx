@@ -8,23 +8,18 @@ import {Box} from "@mui/material";
 import {getData} from "../../api/apiSpringBoot";
 
 export default function ControlledAccordions() {
-    // État pour suivre quel panneau est ouvert
     const [expanded, setExpanded] = React.useState<string | false>(false);
 
-    // Liste des factures récupérées depuis l’API
     const [invoices, setInvoices] = React.useState<any[]>([]);
 
-    // Détails des commandes par facture (clé = id_invoice)
     const [ordersDetails, setOrdersDetails] = React.useState<Record<number, any[]>>({});
 
-    // Gère l'ouverture/fermeture d'un panneau
     const handleChange = (panel: string) => async (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
         if (isExpanded) {
             const invoiceId = parseInt(panel.replace("panel", ""));
             await fetchOrdersDetails(invoiceId);
         } else {
-            // Supprime les détails des commandes si panneau fermé
             setOrdersDetails(prevState => {
                 const updatedState = {...prevState};
                 delete updatedState[parseInt(panel.replace("panel", ""))];
@@ -33,12 +28,10 @@ export default function ControlledAccordions() {
         }
     };
 
-    // Appel initial pour récupérer toutes les factures
     React.useEffect(() => {
         fetchInvoices();
     }, []);
 
-    // Récupère toutes les factures
     const fetchInvoices = async () => {
         try {
             const data = await getData("/invoices/admin/all");
@@ -48,7 +41,6 @@ export default function ControlledAccordions() {
         }
     };
 
-    // Récupère les détails d'une facture si non déjà récupérés
     const fetchOrdersDetails = async (id_invoice: number) => {
         if (ordersDetails[id_invoice]) return;
         try {
@@ -73,7 +65,6 @@ export default function ControlledAccordions() {
                         aria-controls={`panel${index + 1}bh-content`}
                         id={`panel${index + 1}bh-header`}
                     >
-                        {/* Résumé des infos de facture */}
                         <Box sx={{display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', width: '100%'}}>
                             <Typography sx={{flexBasis: {xs: '100%', sm: '45%', md: '23%'}}}>
                                 {new Date(invoice.invoice_date).toLocaleDateString()}
@@ -90,7 +81,6 @@ export default function ControlledAccordions() {
                         </Box>
                     </AccordionSummary>
                     <AccordionDetails>
-                        {/* Affiche les détails des commandes */}
                         <Box>
                             {Array.isArray(ordersDetails[invoice.id_invoice]) && ordersDetails[invoice.id_invoice].length > 0 ? (
                                 ordersDetails[invoice.id_invoice].map((order: any, idx: number) => (

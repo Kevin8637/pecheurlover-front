@@ -26,7 +26,6 @@ export const ShoppingCartProvider = ({children}: { children: ReactNode }) => {
         setTotalPrice(price);
     }, [shoppingCart]);
 
-    //Ajoute le produit au panier
     const addShoppingCart = (product: ProductItem) => {
         setShoppingCart((prevCart) => {
             const productExist = prevCart.find((item) => item.id_product === product.id_product);
@@ -41,12 +40,11 @@ export const ShoppingCartProvider = ({children}: { children: ReactNode }) => {
             }
         });
     };
- //Supprime le produit du panier
+
     const removeShoppingCart = (productId: number) => {
         setShoppingCart((prevCart) => prevCart.filter((item) => item.id_product !== productId));
     };
 
-    //Met à jour la quantité du produit dans le panier
     const updateQuantity = (productId: number, action: "increase" | "decrease") => {
         setShoppingCart((prevCart) =>
             prevCart.map((item) =>
@@ -63,7 +61,7 @@ export const ShoppingCartProvider = ({children}: { children: ReactNode }) => {
             )
         );
     };
-//Vide le panier
+
     const clearShoppingCart = () => {
         setShoppingCart([]);
     };
