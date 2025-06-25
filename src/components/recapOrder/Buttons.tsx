@@ -11,11 +11,17 @@ type InvoiceResponse = {
 const Buttons: FC<{ totalPrice: number; produits: any[] }> = ({totalPrice: propsTotalPrice, produits}) => {
 
     const navigate = useNavigate();
-    const {clearShoppingCart, totalPrice: contextTotalPrice} = useContext(ShoppingCartContext);
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState(false);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+
+    const context = useContext(ShoppingCartContext);
+    if (!context) {
+        throw new Error("ShoppingCartContext must be used within a ShoppingCartProvider");
+    }
+    const { clearShoppingCart, totalPrice: contextTotalPrice } = context;
+
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -41,12 +47,12 @@ const Buttons: FC<{ totalPrice: number; produits: any[] }> = ({totalPrice: props
             }));
 
             const priceToUse = propsTotalPrice || contextTotalPrice;
-            const priceAsNumber = parseFloat(priceToUse);
+            const priceAsNumber = parseFloat(String(priceToUse));
             if (isNaN(priceAsNumber)) {
                 setErrorMessage("Le prix total est invalide.");
                 return;
             }
-            // Vérif du stock
+
             for (const item of produits) {
                 type StockResponse = { stock: number };
                 const stockResponse = await apiSpringBoot.get<StockResponse>(`/products/${item.id_product}/stock`);

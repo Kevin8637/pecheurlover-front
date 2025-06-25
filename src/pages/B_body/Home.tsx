@@ -5,8 +5,15 @@ import {AuthContext} from "../../context/AuthContext";
 import {createGlobalStyle} from "styled-components";
 import apiSpringBoot from "../../api/apiSpringBoot";
 
+interface Saumon {
+    id: number;
+    x: number;
+    y: number;
+}
+
+
 const Home = () => {
-    const [saumons, setSaumons] = useState([]);
+    const [saumons, setSaumons] = useState<Saumon[]>([]);
     const navigate = useNavigate();
     const {isLogged, setIsLogged, setUserRole} = useContext(AuthContext);
     const [email, setEmail] = useState("");

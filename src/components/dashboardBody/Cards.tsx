@@ -92,13 +92,12 @@ const Cards = ({products}: CardsProps) => {
 
 const StyledCard = styled.div`
     .card {
-        --background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);
         width: 190px;
         height: 254px;
         padding: 5px;
         border-radius: 1rem;
         overflow: hidden;
-        background: var(--background);
+        background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);
         position: relative;
         z-index: 1;
         cursor: pointer;
@@ -124,14 +123,13 @@ const StyledCard = styled.div`
         width: 100%;
         transform: scale(0.8);
         filter: blur(25px);
-        background: var(--background);
+        background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);
         transition: opacity 0.5s;
     }
 
     .card-info {
-        --color: #181818;
-        background: var(--color);
-        color: var(--color);
+        background: #181818;
+        color: #181818;
         display: flex;
         flex-direction: column;
         justify-content: space-around;

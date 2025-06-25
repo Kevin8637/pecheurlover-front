@@ -1,15 +1,20 @@
 import React, {FC, useContext, useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
-import {AuthContext} from "../../context/AuthContext";
 import {createGlobalStyle} from "styled-components";
 import apiSpringBoot from "../../api/apiSpringBoot";
+
+interface Saumon {
+    id: number;
+    x: number;
+    y: number;
+}
 
 const Register: FC<{}> = ({}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
-    const [saumons, setSaumons] = useState([]);
+    const [saumons, setSaumons] = useState<Saumon[]>([]);
     const navigate = useNavigate();
 
     const GlobalStyle = createGlobalStyle`
